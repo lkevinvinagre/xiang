@@ -1,0 +1,24 @@
+services:
+  db:
+    image: mysql:5.7
+    container_name: xiang_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: xiang
+      MYSQL_USER: xiang
+      MYSQL_PASSWORD: xiang
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - xiang_network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  xiang_network:
+    driver: bridge
