@@ -1,0 +1,51 @@
+FROM php:8.3-fpm-alpine
+
+# Update package index and upgrade installed packages to reduce vulnerabilities
+RUN apk update && apk upgrade --no-cache && \
+	apk add --no-cache --virtual .build-deps curl && \
+	rm -rf /var/cache/apk/*
+
+# Install dependencies
+RUN apk add --no-cache \
+    git \
+    curl \ 
+    libpng-dev \
+    libzip-dev \
+    zip \
+    unzip \
+    supervisor \
+    nginx \
+    nodejs \
+    npm \ 
+    yarn 
+# Install PHP extensions
+RUN  docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    bcmath \
+    gd \
+    zip
+
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy application files
+
+COPY . .
+
+# Install laravel dependencies
+RUN composer install --no-dev 
+
+# Copy Nginx and Supervisor configuration 
+COPY .docker/nginx.conf /etc/nginx/nginx.conf
+COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+
+# Expose port
+EXPOSE 80
+
+# Start Supervisor 
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
