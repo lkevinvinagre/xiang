@@ -9,11 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Account extends Model
 {
     use HasFactory;
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
+    
     protected $fillable = [
         'title',
         'url',
@@ -24,4 +20,9 @@ class Account extends Model
     protected $hidden = [
         'password',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
