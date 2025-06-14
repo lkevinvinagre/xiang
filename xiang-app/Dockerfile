@@ -38,8 +38,7 @@ COPY . .
 
 # Set permissions for storage and bootstrap/cache directories
 RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R u+rwX /var/www/html && \
-    chmod -R 775 /var/www/html/storage
+    chmod -R 775 /var/www/html
 
 
 # Install composer dependencies

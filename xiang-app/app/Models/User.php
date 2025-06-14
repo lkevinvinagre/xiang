@@ -32,7 +32,7 @@ class User extends Authenticatable
         ];
     }
 
-    protected function account(): HasMany
+    public function accounts(): HasMany
     {
         return $this->hasMany(Account::class);
     }
