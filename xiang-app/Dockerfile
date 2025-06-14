@@ -18,6 +18,7 @@ RUN apk add --no-cache \
     nodejs \
     npm \ 
     yarn 
+
 # Install PHP extensions
 RUN  docker-php-ext-install \
     pdo \
@@ -32,16 +33,24 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy application files
-
+ # Copy application files
 COPY . .
 
-# Install laravel dependencies
-RUN composer install --no-dev 
+# Set permissions for storage and bootstrap/cache directories
+RUN chown -R www-data:www-data /var/www/html && \
+    chmod -R u+rwX /var/www/html
+
+
+# Install composer dependencies
+USER www-data
+RUN composer install --no-dev --no-interaction --prefer-dist
+USER root
 
 # Copy Nginx and Supervisor configuration 
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
 COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY .docker/run-migrations.sh /usr/local/bin/run-migrations.sh
+RUN chmod +x /usr/local/bin/run-migrations.sh
 
 
 # Expose port

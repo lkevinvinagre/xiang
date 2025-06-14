@@ -7,8 +7,6 @@ services:
     container_name: app
     restart: unless-stopped
     working_dir: /var/www/html
-    volumes:
-      - ./xiang-app/:/var/www/html
     depends_on:
       - db
     networks:
@@ -22,7 +20,7 @@ services:
       - "8080:80"
     volumes:
       - ./xiang-app/.docker/nginx.conf:/etc/nginx/nginx.conf
-      - ./xiang-app/:/var/www/html
+      - ./xiang-app:/var/www/html  
     depends_on:
       - app
     networks:
