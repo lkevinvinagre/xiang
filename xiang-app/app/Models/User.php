@@ -58,4 +58,11 @@ class User extends Authenticatable
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
+    /*
+    Function to get user's accounts
+    */
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
+    }
 }
