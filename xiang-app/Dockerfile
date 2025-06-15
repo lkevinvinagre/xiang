@@ -49,8 +49,13 @@ USER root
 # Copy Nginx and Supervisor configuration 
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
 COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+#Set migrations
 COPY .docker/run-migrations.sh /usr/local/bin/run-migrations.sh
 RUN chmod +x /usr/local/bin/run-migrations.sh
+#Set entrypoints
+COPY .docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 
 # Expose port

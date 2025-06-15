@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\Models\User;
 use App\Rules\StrongPassword;
@@ -34,12 +37,56 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-        if(!$token = JWTAuth::attempt($request->only('email', 'password'))) {
+        if(! JWTAuth::attempt($request->only('email', 'password'))) {
             return response()->json(['error' => 'Email or password is incorrect'], 401);
         }
-        return $this->createNewToken($token);
+
+        $code = rand(100000, 999999);
+        $email = $request->email;
+
+        Cache::put('2fa_' . $email, $code, now()->addMinutes(5));
+
+         Mail::raw("Seu código de autenticação é: $code", function ($message) use ($email) {
+        $message->to($email)
+            ->subject('Código de autenticação');
+        });
+
+        return response()->json([
+        'message' => 'Código de autenticação enviado para o e-mail.',
+        'email' => $email
+        ]);
 
     }
+
+    public function verify2fa(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'code' => 'required|digits:6',
+        ]);
+        if ($validator->fails())
+        {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
+        $email = $request->email;
+        $code = $request->code;
+
+        $cachedCode = Cache::get('2fa_' . $email);
+
+        if (!$cachedCode || $cachedCode != $code)
+        {
+            return response()->json(['error' => 'Código inválido ou expirado'], 401);
+        }
+
+        Cache::forget('2fa_' . $email);
+
+        $user = User::where('email', $email)->first();
+        $token = JWTAuth::fromUser($user);
+
+        return $this->createNewToken($token);
+    }
+
     public function logout()
     {
         JWTAuth::invalidate(JWTAuth::getToken());
