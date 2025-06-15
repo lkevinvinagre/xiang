@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -19,8 +20,15 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make(($request->all()), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'email' => [
+                'required',
+                'email',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:6',
+            ],
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
@@ -38,9 +46,24 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'email' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:users',
+                Rule::email(),
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:6',
+                'confirmed',
+            ],
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
