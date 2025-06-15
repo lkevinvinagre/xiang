@@ -17,9 +17,6 @@ class Account extends Model
         'password',
         'user_id',
     ];
-    protected $hidden = [
-        'password',
-    ];
 
     public function user(): BelongsTo
     {

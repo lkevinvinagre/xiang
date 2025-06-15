@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 use App\Models\User;
 use App\Rules\StrongPassword;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -80,7 +79,7 @@ class AuthController extends Controller
         $user =  User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
         ]);
         return response()->json([
             'message' => 'User registered successfully',
@@ -100,7 +99,7 @@ class AuthController extends Controller
             'token' => $token,
             'token_type' => 'Bearer',
             'expires_at' => JWTAuth::factory()->getTTL()*60,
-            'user' => JWTAuth::user()
+            'user' => JWTAuth::user(),
         ], 200);
     }
 }
