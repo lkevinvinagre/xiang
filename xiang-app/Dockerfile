@@ -37,9 +37,8 @@ WORKDIR /var/www/html
 COPY . .
 
 # Set permissions for storage and bootstrap/cache directories
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R u+rwX /var/www/html && \
-    chmod -R 775 /var/www/html/storage
+RUN chown -R 82:82 /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache
 
 
 # Install composer dependencies
@@ -50,8 +49,13 @@ USER root
 # Copy Nginx and Supervisor configuration 
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
 COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+#Set migrations
 COPY .docker/run-migrations.sh /usr/local/bin/run-migrations.sh
 RUN chmod +x /usr/local/bin/run-migrations.sh
+#Set entrypoints
+COPY .docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 
 # Expose port

@@ -9,16 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Account extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'title',
         'url',
         'username',
         'password',
         'user_id',
-    ];
-    protected $hidden = [
-        'password',
     ];
 
     public function user(): BelongsTo
