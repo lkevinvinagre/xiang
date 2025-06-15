@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\User;
+use App\Rules\StrongPassword;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -56,13 +57,14 @@ class AuthController extends Controller
                 'string',
                 'max:255',
                 'unique:users',
-                Rule::email(),
+                Rule::email()->validateMxRecord(),
             ],
             'password' => [
                 'required',
                 'string',
                 'min:6',
                 'confirmed',
+                new StrongPassword,
             ],
         ]);
         if ($validator->fails()) {
