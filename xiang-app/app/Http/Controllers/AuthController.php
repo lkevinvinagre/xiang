@@ -40,9 +40,12 @@ class AuthController extends Controller
         return $this->createNewToken($token);
 
     }
-    public function logout(Request $request)
+    public function logout()
     {
-        return null;
+        JWTAuth::invalidate(JWTAuth::getToken());
+        return response()->json([
+            'message' => 'logged out',
+        ],200);
     }
     public function register(Request $request)
     {
@@ -79,6 +82,11 @@ class AuthController extends Controller
             'message' => 'User registered successfully',
             'user' => $user
         ], 201);
+    }
+
+    public function profile()
+    {
+        return response()->json(auth()->guard('api')->user());
     }
 
     public function createNewToken($token)

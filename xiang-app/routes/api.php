@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 Route::apiResource('accounts',AccountController::class);
 Route::group(['middleware'=>'api','prefix'=>'auth'],function () {
     Route::post('login',[AuthController::class,'login']);
-    Route::post('logout',[AuthController::class,'logout']);
+    Route::get('logout',[AuthController::class,'logout']);
     Route::post('register',[AuthController::class,'register']);
+    Route::get('profile',[AuthController::class,'profile']);
 });
