@@ -37,6 +37,15 @@
             </form>
         </div>
     </div>
+    <div
+        x-show="success"
+        x-transition
+        class="fixed top-8 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded shadow-lg z-50"
+        @click="success = false"
+        style="display: none;"
+    >
+        User was signup
+    </div>
 </div>
 
 <script>
@@ -44,6 +53,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('signupModal', () => ({
         open: false,
         error: '',
+        success:false,
         async register(event) {
             this.error = '';
             const name = this.$refs.name.value;
@@ -68,7 +78,8 @@ document.addEventListener('alpine:init', () => {
             }
             } else {
                 this.closeModal();
-                window.location.reload();
+                this.success = true;
+                setTimeout(() => { this.success = false }, 3000);
             }
 
             
