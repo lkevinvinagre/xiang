@@ -4,9 +4,9 @@
      <table class="table" id="accounts-table" style="display:none;">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Usuário</th>
-                <th>Ações</th>
+                <th class="text-[#000000] dark:text-[#FFFFFF]">Nome</th>
+                <th class="text-[#000000] dark:text-[#FFFFFF]">Usuário</th>
+                <th class="text-[#000000] dark:text-[#FFFFFF]">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -38,9 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
             accounts.forEach(account => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${account.name || ''}</td>
-                    <td>${account.username || ''}</td>
-                    <td>
+                    <td class="text-[#000000] dark:text-[#FFFFFF]">${account.name || ''}</td>
+                    <td class="text-[#000000] dark:text-[#FFFFFF]">${account.username || ''}</td>
+                    <td class="text-[#000000] dark:text-[#FFFFFF]">
                         <a href="/accounts/${account.id}">Ver</a>
                         <a href="/accounts/${account.id}/edit">Editar</a>
                         <button onclick="deleteAccount(${account.id})">Excluir</button>
