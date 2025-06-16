@@ -23,5 +23,6 @@
             @include('fragments.logoutBTN')
         </nav>
     </header>
+    @include('fragments.listaccounts')
 </body>
 </html>

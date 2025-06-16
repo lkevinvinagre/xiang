@@ -1,5 +1,5 @@
 <!--Login modal blade Fragment-->
-<div x-data="loginModal()" class="relative">
+<div x-data="loginModal()" class="relative" x-clock>
 <!-- Button to go to modal -->
  <div @click="open = true"
     class=" h-full cursor-pointer px-4 py-2 bg-white text-black transition">
@@ -55,7 +55,7 @@ document.addEventListener('alpine:init', () => {
                 if (data.error) {
                     this.error = Object.values(data.error).flat().join(' ');
                 } else {
-                this.error = 'Falha no cadastro';
+                this.error = 'Fails on register';
             }
             } else {
                 //Store token and user info

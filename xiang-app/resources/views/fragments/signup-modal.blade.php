@@ -1,4 +1,4 @@
-<div x-data="signupModal()" class="relative">
+<div x-data="signupModal()" class="relative" x-clock>
     <!-- Botão para abrir o modal -->
     <div @click="open = true"
         class="h-full cursor-pointer px-4 py-2 text-white transition">
@@ -74,7 +74,7 @@ document.addEventListener('alpine:init', () => {
                 if (data.error) {
                     this.error = Object.values(data.error).flat().join(' ');
                 } else {
-                this.error = 'Falha no cadastro';
+                this.error = 'Fails to register';
             }
             } else {
                 this.closeModal();
