@@ -36,6 +36,9 @@ WORKDIR /var/www/html
  # Copy application files
 COPY . .
 
+#COPY .env DOCKER VERSION
+COPY .env.example /var/www/html/.env
+
 #Run npm install and build
 COPY /public/build / /var/www/html/
 
