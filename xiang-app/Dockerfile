@@ -32,13 +32,11 @@ USER www-data
 RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 USER root
 
-RUN chmod +x /usr/local/bin/run-migrations.sh /usr/local/bin/entrypoint.sh
-
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
 COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY .docker/run-migrations.sh /usr/local/bin/run-migrations.sh
 COPY .docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-
+RUN chmod +x /usr/local/bin/run-migrations.sh /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 EXPOSE 80
