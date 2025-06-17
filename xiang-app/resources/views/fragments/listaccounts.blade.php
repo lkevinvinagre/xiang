@@ -1,5 +1,5 @@
 <section x-data="accountDashboard()" x-init="fetchAccounts()"  class="w-full flex flex-col items-start p-4">
-    <H1 class="p-4 text-6xl bold text-[#000000] dark:text-[#FFFFFF]">Accounts:</H1>@include('fragments.addaccount-modal')
+    @include('fragments.addaccount-modal')
     <table x-show="accounts.length > 0" class="table">
         <tr>
             <td class="p-4 text-[#000000] dark:text-[#FFFFFF]">Title:</td>
