@@ -36,9 +36,15 @@ WORKDIR /var/www/html
  # Copy application files
 COPY . .
 
+#COPY .env DOCKER VERSION
+COPY .env.example /var/www/html/.env
+
+#Run npm install and build
+COPY /public/build / /var/www/html/
+
 # Set permissions for storage and bootstrap/cache directories
-RUN chown -R 82:82 /var/www/html/storage /var/www/html/bootstrap/cache && \
-    chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 
 # Install composer dependencies
