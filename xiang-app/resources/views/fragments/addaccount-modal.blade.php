@@ -91,6 +91,7 @@ document.addEventListener('alpine:init', () => {
                 this.closeModal();
                 this.success = true;
                 setTimeout(() => { this.success = false }, 3000);
+                location.reload();
             }
         },
         closeModal() {
