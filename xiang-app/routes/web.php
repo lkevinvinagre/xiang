@@ -9,3 +9,6 @@ Route::get('/', function () {
 Route::get('/accounts', function () {
     return view('layouts.accounts');
 });
+Route::get('/login',function () {
+    return response()->json(['message' => 'Unauthenticated'], 401);
+});
