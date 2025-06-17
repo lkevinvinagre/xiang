@@ -49,3 +49,15 @@ Avalie se possui um banco de dados mysql rodando na porta 3306 php e composer de
 
 # 🐞 Bugs:
 <p>Atualmente dois bugs marjoritarios são o de primeira compilação do docker que foi abordado na sessão do docker o mesmo se dar por conta das migrations que nao conseguem ser consideradas em primeira execução como explicado na mesma a segunda e os modals piscarem rapidamente na tela ao atualizar o mesmo se da por um bug no alpine mesmo com o x-clock continua ocorrendo e a terceeira e que ao adicionar uma conta e necessario atualizar a pasta isso se da pq ao adicionar o render da pagina ja foi realizado então se ve necessario criar um componente para atualizar a mesma apos uma edição tais bugs estão sendo testados para serem corrigidos</p>
+
+# ☀️ Light theme
+
+![Alt text](screens/screen21.png)
+![Alt text](screens/screen22.png)
+![Alt text](screens/screen23.png)
+
+# 🌙 Dark Theme
+
+![Alt text](screens/screen11.png)
+![Alt text](screens/screen12.png)
+![Alt text](screens/screen13.png)
