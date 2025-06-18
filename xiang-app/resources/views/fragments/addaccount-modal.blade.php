@@ -1,4 +1,4 @@
-<div x-data="addaccountModal()" class="relative" x-cloak>
+<div x-data="addaccountModal()" class="relative">
     <!-- Botão para abrir o modal -->
      <span class="flex gap-4 mb-4">
     <p class="text-4xl text-[#000000] dark:text-[#FFFFFF]">Accounts:</p>
